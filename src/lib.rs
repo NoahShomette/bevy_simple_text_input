@@ -153,6 +153,7 @@ fn create(mut commands: Commands, query: Query<(Entity, &TextInput), Added<TextI
                                 value: "}".to_string(),
                                 style: TextStyle {
                                     font: CURSOR_HANDLE,
+                                    color: Color::NONE,
                                     ..input.text_style.clone()
                                 },
                             },
