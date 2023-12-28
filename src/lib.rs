@@ -22,14 +22,19 @@ impl Plugin for TextInputPlugin {
 
 const CURSOR_HANDLE: Handle<Font> = Handle::weak_from_u128(10482756907980398621);
 
+/// Settings driving the text input box
 #[derive(Component, Default)]
 pub struct TextInput {
     pub text_style: TextStyle,
     /// The text input does not respond to keyboard events
     pub inactive: bool,
 }
+
+/// Marker component for the entity that actually holds the text of the text input widget.
+///
+/// Text section 1 contains the cursor, text sections 0 and 2 contain the text in front of and behind the cursor
 #[derive(Component)]
-struct TextInputInner;
+pub struct TextInputInner;
 
 #[derive(Component)]
 struct CursorTimer(Timer);
@@ -110,8 +115,6 @@ fn keyboard(
                                     text.sections[0].value, text.sections[2].value
                                 ),
                             });
-                            text.sections[0].value.clear();
-                            text.sections[2].value.clear();
                         }
                         _ => {}
                     }
@@ -199,7 +202,7 @@ fn cursor(
             if let Ok(mut text) = text_query.get_mut(descendant) {
                 if text.sections[1].style.color != Color::NONE {
                     text.sections[1].style.color = Color::NONE;
-                } else {
+                } else if text_input.inactive == false {
                     text.sections[1].style.color = text_input.text_style.color;
                 }
             }
