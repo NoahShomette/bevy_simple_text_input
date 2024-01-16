@@ -135,7 +135,7 @@ fn create(mut commands: Commands, query: Query<(Entity, &TextInput), Added<TextI
     for (entity, input) in &query {
         commands
             .entity(entity)
-            .insert((CursorTimer::default(), Interaction::None));
+            .try_insert((CursorTimer::default(), Interaction::None));
 
         let text = commands
             .spawn((
