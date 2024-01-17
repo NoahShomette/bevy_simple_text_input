@@ -16,7 +16,7 @@ impl Plugin for TextInputPlugin {
         );
 
         app.add_event::<TextInputSubmitEvent>()
-            .add_systems(Update, (create, keyboard, cursor));
+            .add_systems(PostUpdate, (create, keyboard, cursor));
     }
 }
 
